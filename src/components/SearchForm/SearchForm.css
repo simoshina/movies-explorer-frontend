@@ -6,6 +6,11 @@
   padding-bottom: 13px;
 }
 
+.search:focus-within {
+  border-bottom: rgba(66,133,244, .8) dotted 1px;
+  transition: border-bottom .2s linear;
+}
+
 .search__input {
   padding: 0;
   font-weight: 500;
@@ -17,7 +22,7 @@
   flex-basis: 90%;
 }
 
-.search__input:focus-visible {
+.search__input:focus {
   outline: none;
 }
 
