@@ -1,0 +1,24 @@
+@import url(./Promo/Promo.css);
+@import url(./NavTab/NavTab.css);
+@import url(./AboutProject/AboutProjest.css);
+@import url(./Techs/Techs.css);
+@import url(./AboutMe/AboutMe.css);
+@import url(./Portfolio/Portfolio.css);
+
+.main__heading {
+  margin: 0;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #dadada;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width: 590px) {
+  .main__heading {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+}
