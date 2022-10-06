@@ -1,16 +1,16 @@
 import { Link, NavLink } from "react-router-dom";
 
-function BurgerMenu() {
+function BurgerMenu({ isOpen, closeMenu }) {
   return (
-    <div className="burger">
-    <button title="Закрыть" type="button" className="burger__button"/>
+    <div className={isOpen ? 'burger burger_visible' : 'burger'}>
+    <button title="Закрыть" type="button" className="burger__button" onClick={closeMenu}/>
       <div className="burger__menu">
         <nav className="burger__nav">
-          <NavLink exact to="/" activeClassName='burger__link_active' className="burger__link">Главная</NavLink>
-          <NavLink to="/movies" activeClassName='burger__link_active' className="burger__link">Фильмы</NavLink>
-          <NavLink to="/saved-movies" activeClassName='burger__link_active' className="burger__link">Сохраненные фильмы</NavLink>
+          <NavLink exact to="/" activeClassName='burger__link_active' className="burger__link" onClick={closeMenu}>Главная</NavLink>
+          <NavLink to="/movies" activeClassName='burger__link_active' className="burger__link" onClick={closeMenu}>Фильмы</NavLink>
+          <NavLink to="/saved-movies" activeClassName='burger__link_active' className="burger__link" onClick={closeMenu}>Сохраненные фильмы</NavLink>
         </nav>
-        <Link to="/profile" className="burger__profile">Аккаунт<span className="navigation__logo"/></Link>
+        <Link to="/profile" className="burger__profile" onClick={closeMenu}>Аккаунт<span className="navigation__logo"/></Link>
       </div>
     </div>
   )

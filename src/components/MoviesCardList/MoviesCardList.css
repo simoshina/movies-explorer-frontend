@@ -29,6 +29,15 @@
   visibility: hidden;
 }
 
+.cardlist__notfound {
+  margin: 0;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 27px;
+  text-align: center;
+  letter-spacing: -0.04em;
+}
+
 @media screen and (max-width: 1150px) {
   .cardlist {
     margin: 60px 0 80px;
