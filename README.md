@@ -15,6 +15,8 @@
 Для запуска необходимо склонировать проект и запустить с помощью команды npm run start.
 
 * [Ссылка на сайт](https://simoshina.moviebase.nomoredomains.xyz/)
+* [Ссылка на pull request](https://github.com/simoshina/movies-explorer-frontend/pull/2)
+* [Ссылка на макет](https://www.figma.com/file/KkLizWWtZl7u3kCgTDOdg9/Diploma-(Copy)?node-id=932%3A2618)
 
 Проект создан в рамках обучения в [Яндекс.Практикуме](https://practicum.yandex.ru/).  
 Автор: [@simoshina](https://github.com/simoshina).
