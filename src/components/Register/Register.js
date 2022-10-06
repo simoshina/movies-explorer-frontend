@@ -16,7 +16,6 @@ function Register({ handleRegister, isSuccess }) {
   function handleSubmit(e){
     e.preventDefault();
     handleRegister(authData)
-    console.log(authData)
   }
   
   return (

@@ -59,7 +59,7 @@ function App() {
   }
 
   function handleLogin(data) {
-     auth.login(data.email, data.password)
+     return auth.login(data.email, data.password)
       .then(res => {
         if (res.token) {
           setCurrentUser(res);
@@ -76,7 +76,7 @@ function App() {
   }
 
   function handleRegister(data) {
-    auth.register(data.name, data.email, data.password)
+    return auth.register(data.name, data.email, data.password)
       .then(() => {
         handleLogin(data);
         setIsSuccess(true);
@@ -124,11 +124,13 @@ function App() {
   }
 
   function handleLogout() {
-    auth.signout();
-    localStorage.clear();
+    auth.signout()
+    .then()
+    .catch((err) => console.log(err));
     setLoggedIn(false);
     setIsSuccess(true);
     history.push('/');
+    localStorage.clear();
   }
 
   function openMenu() {
@@ -156,12 +158,11 @@ function App() {
             loggedIn={loggedIn} component={Profile} handleUpdate={handleUpdateUser} handleLogout={handleLogout}/>
           <ProtectedRoute path='/movies' movies={moviesData} openMenu={openMenu} isLoading={isLoading}
             loggedIn={loggedIn} component={Movies} saveFilm={saveFilm} userMovies={userMovies}/>
-
           <ProtectedRoute path='/saved-movies' userMovies={userMovies} openMenu={openMenu} isLoading={isLoading}
             loggedIn={loggedIn} component={SavedMovies} deleteFilm={deleteFilm}/>
           <Route path='*' component={NotFound}/>
         </Switch>
-        <BurgerMenu isOpen={isOpen} closeMenu={closeMenu}/>
+        {loggedIn && <BurgerMenu isOpen={isOpen} closeMenu={closeMenu}/>}
       </CurrentUserContext.Provider>
     </div>
   )
