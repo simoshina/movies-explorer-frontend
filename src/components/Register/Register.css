@@ -39,10 +39,6 @@
   outline: #555555 2px solid;
 }
 
-.auth__input:invalid {
-  color: #EE3465;
-}
-
 .auth__button {
   margin: auto 0 16px;
   background-color: #4285F4;

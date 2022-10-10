@@ -4,7 +4,6 @@ import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { auth } from '../../utils/Auth';
 import { api } from '../../utils/MainApi';
-import { moviesApi } from '../../utils/MoviesApi';
 
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -15,15 +14,15 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import ProtectedRoute from '../ProtectedRoute';
 import Movies from '../Movies/Movies';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import Popup from '../Popup/Popup';
 
 function App() {
   const [isSuccess, setIsSuccess] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(null);
   const [userMovies, setUserMovies] = useState([]);
-  const [moviesData, setMoviesData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -38,20 +37,12 @@ function App() {
     tokenCheck();
   }, [loggedIn]);
 
-  useEffect(() => {
-    moviesApi.getMovies()
-      .then(movies => {
-        setIsLoading(true)
-        setMoviesData(movies)})
-      .catch(err => console.log(err))
-      .finally(() => setIsLoading(false))
-  }, []);
-
   function handleUpdateUser(data) {
     auth.editProfile(data)
     .then((res) => {
       setCurrentUser(res);
-      setIsSuccess(true)})
+      setIsSuccess(true);
+      setIsPopupOpen(true)})
     .catch((err) => {
       setIsSuccess(false);
       console.log(err)
@@ -65,7 +56,7 @@ function App() {
           setCurrentUser(res);
           setIsSuccess(true);
           setLoggedIn(true);
-          history.push("/movies")
+          history.push("/movies");
         }
       })
       .catch((err) => {
@@ -93,6 +84,7 @@ function App() {
     })
     .catch((err) => {
       setLoggedIn(false);
+      localStorage.clear();
       console.log(err);
     });
   }
@@ -130,15 +122,15 @@ function App() {
     setLoggedIn(false);
     setIsSuccess(true);
     history.push('/');
-    localStorage.clear();
   }
 
   function openMenu() {
-    setIsOpen(true)
+    setIsMenuOpen(true)
   }
 
-  function closeMenu() {
-    setIsOpen(false)
+  function close() {
+    setIsMenuOpen(false);
+    setIsPopupOpen(false)
   }
 
   return (
@@ -154,15 +146,16 @@ function App() {
           <Route path='/signup'>
             {loggedIn ? <Redirect exact to='/'/> : <Register handleRegister={handleRegister} isSuccess={isSuccess}/>}
           </Route>
-          <ProtectedRoute path='/profile' isSuccess={isSuccess} openMenu={openMenu} 
+          <ProtectedRoute path='/profile' isSuccess={isSuccess} openMenu={openMenu} setIsSuccess={setIsSuccess}
             loggedIn={loggedIn} component={Profile} handleUpdate={handleUpdateUser} handleLogout={handleLogout}/>
-          <ProtectedRoute path='/movies' movies={moviesData} openMenu={openMenu} isLoading={isLoading}
+          <ProtectedRoute path='/movies' openMenu={openMenu}
             loggedIn={loggedIn} component={Movies} saveFilm={saveFilm} userMovies={userMovies}/>
-          <ProtectedRoute path='/saved-movies' userMovies={userMovies} openMenu={openMenu} isLoading={isLoading}
+          <ProtectedRoute path='/saved-movies' userMovies={userMovies} openMenu={openMenu}
             loggedIn={loggedIn} component={SavedMovies} deleteFilm={deleteFilm}/>
           <Route path='*' component={NotFound}/>
         </Switch>
-        {loggedIn && <BurgerMenu isOpen={isOpen} closeMenu={closeMenu}/>}
+        {loggedIn && <BurgerMenu isOpen={isMenuOpen} closeMenu={close}/>}
+        <Popup isOpen={isPopupOpen} onClose={close}/>
       </CurrentUserContext.Provider>
     </div>
   )

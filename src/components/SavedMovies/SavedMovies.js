@@ -5,30 +5,38 @@ import Header from '../Header/Header';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Navigation from '../Navigation/Navigation';
 import SearchForm from '../SearchForm/SearchForm';
+import Preloader from "../Preloader/Preloader";
+import { SHORTFILMDURATION } from '../../constants/config';
 
-function SavedMovies({ userMovies, openMenu, deleteFilm }) {
+function SavedMovies({ userMovies, openMenu, deleteFilm, isLoading }) {
   const [inputValue, setInputValue] = useState('');
-  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState(userMovies);
   const [shortFilm, setShortFilm] = useState(false);
   
   useEffect(() => {
+    findUserMovies(userMovies, inputValue);
+  }, [shortFilm]);
+
+  useEffect(() => {
     setFilteredMovies(userMovies);
-    setShortFilm(false)
-  }, [userMovies]);
+  }, [userMovies])
 
   function findUserMovies(data, value) {
     const movies = data.filter((item) => item.nameRU.toLowerCase().includes(value.toLowerCase()));
-    const shortMoviesData = movies.filter((item) => item.duration <= 40);
-    shortFilm ? setFilteredMovies(shortMoviesData) : setFilteredMovies(movies);
+    if (shortFilm) {
+      const shortMoviesData = movies.filter((item) => item.duration <= SHORTFILMDURATION);
+      setFilteredMovies(shortMoviesData)
+    } else {
+      setFilteredMovies(movies);
+    }
   }
 
   function handleChange(e) {
     setInputValue(e.target.value);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    shortFilm ? findUserMovies(filteredMovies, inputValue) : findUserMovies(userMovies, inputValue)
+  function handleSubmit() {
+    findUserMovies(userMovies, inputValue);
   }
 
   function checkTumbler() {
@@ -41,9 +49,10 @@ function SavedMovies({ userMovies, openMenu, deleteFilm }) {
         <Navigation openMenu={openMenu}/>
       </Header>
       <main className='movies'>
-        <SearchForm handleChange={handleChange} handleSubmit={handleSubmit} inputValue={inputValue}/>
+        <SearchForm handleChange={handleChange} onSubmit={handleSubmit} inputValue={inputValue}/>
         <FilterCheckbox checkTumbler={checkTumbler} shortFilm={shortFilm}/>
-        <MoviesCardList userMovies={filteredMovies} deleteFilm={deleteFilm}/>
+        {isLoading ? <Preloader/> :
+        <MoviesCardList userMovies={filteredMovies} deleteFilm={deleteFilm}/>}
       </main>
       <Footer/>
     </>

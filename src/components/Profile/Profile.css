@@ -33,6 +33,10 @@
   border-bottom: 1px solid #424242;
 }
 
+.profile__label_active:first-child {
+  border-bottom: 1px dashed #4285F4;
+}
+
 .profile__input {
   padding: 0;
   font-weight: 400;

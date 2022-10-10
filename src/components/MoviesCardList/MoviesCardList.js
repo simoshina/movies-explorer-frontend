@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { CARDSAMOUNT, CARDSAMOUNTMOBILE, MOBILEWIDTH } from "../../constants/config";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import Preloader from "../Preloader/Preloader";
 
-function MoviesCardList({filteredMovies, userMovies, isLoading, saveFilm, deleteFilm}) {
+function MoviesCardList({filteredMovies, userMovies, saveFilm, deleteFilm}) {
   const location = useLocation();
-  const [renderCards, setRenderCards] = useState(7);
-  const [renderCardsMobile, setRenderCardsMobile] = useState(5);
-  const widthMobile = document.documentElement.clientWidth <= 560;
+  const [renderCards, setRenderCards] = useState(CARDSAMOUNT);
+  const [renderCardsMobile, setRenderCardsMobile] = useState(CARDSAMOUNTMOBILE);
+  const widthMobile = document.documentElement.clientWidth <= MOBILEWIDTH;
 
   function loadMore() {
-    widthMobile ? setRenderCardsMobile(renderCardsMobile + 5) : setRenderCards(renderCards + 7)
+    widthMobile ? setRenderCardsMobile(renderCardsMobile + CARDSAMOUNTMOBILE) : setRenderCards(renderCards + CARDSAMOUNT)
   }
 
   function checkLike(id) {
@@ -19,8 +19,6 @@ function MoviesCardList({filteredMovies, userMovies, isLoading, saveFilm, delete
 
   return (
     <section className="cardlist">
-      {isLoading && <Preloader/>}
-
       {location.pathname === '/movies' ? 
         filteredMovies.length > 0 ?
           widthMobile ?
