@@ -51,12 +51,16 @@ function Movies({ openMenu, saveFilm, userMovies }) {
   }
 
   function handleSubmit() {
-    moviesData.length === 0 ? getInitialMoviesData(inputValue) : findMovies(moviesData, inputValue);
+    if(moviesData.length === 0) {
+      getInitialMoviesData(inputValue)
+    } else {
+      findMovies(moviesData, inputValue);
+    }
   }
 
   function checkTumbler() {
     setShortFilm(!shortFilm);
-    !shortFilm ? localStorage.setItem('tumbler', true) : localStorage.setItem('tumbler', false);
+    localStorage.setItem('tumbler', !shortFilm);
     !shortFilm ? findMovies(filteredMovies, localStorage.keyword) : findMovies(moviesData, localStorage.keyword);
   }
 
