@@ -51,7 +51,7 @@
 
 @media screen and (max-width: 560px) {
   .search {
-    margin: 84px 4px 0;
+    margin: 84px 0 0;
   }
 
   .search__input {

@@ -7,15 +7,17 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import Navigation from '../Navigation/Navigation';
 
-function Main() {
+function Main({ loggedIn, openMenu }) {
   return (
     <>
       <Header>
+      {loggedIn ? <Navigation openMenu={openMenu} /> : 
         <nav className='header__nav'>
           <Link to='/signup' className='header__navlink'>Регистрация</Link>
           <Link to='/signin' className='header__navlink'>Войти</Link>
-        </nav>
+        </nav>}
       </Header>
       <BurgerMenu/>
       <main>

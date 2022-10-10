@@ -13,7 +13,7 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
-  margin: 40px 0;
+  margin: 40px 0 20px;
 }
 
 .auth__label {
@@ -21,7 +21,7 @@
   font-size: 10px;
   line-height: 12px;
   color: #8B8B8B;
-  margin: 0 0 10px;
+  margin: 20px 0 10px;
 }
 
 .auth__input {
@@ -36,11 +36,7 @@
 }
 
 .auth__input:focus {
-  outline: none;
-}
-
-.auth__input_error {
-  color: #EE3465;
+  outline: #555555 2px solid;
 }
 
 .auth__button {
